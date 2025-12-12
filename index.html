@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Fiesta Party</title>
+    <style>
+        *,
+        *::after,
+        *::before {
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          min-height: 100vh;
+          background: linear-gradient(to bottom, #0a1628, #1a2744, #0f1e3a);
+          overflow-x: hidden;
+          font-family: 'Arial', sans-serif;
+          position: relative;
+        }
+
+        /* Animated Background */
+        .night {
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-image: 
+            radial-gradient(2px 2px at 20% 30%, white, transparent),
+            radial-gradient(2px 2px at 60% 70%, white, transparent),
+            radial-gradient(1px 1px at 50% 50%, white, transparent),
+            radial-gradient(1px 1px at 80% 10%, white, transparent),
+            radial-gradient(2px 2px at 90% 60%, white, transparent),
+            radial-gradient(1px 1px at 33% 80%, white, transparent),
+            radial-gradient(2px 2px at 70% 25%, white, transparent);
+          background-size: 200% 200%;
+          animation: twinkle 5s ease-in-out infinite;
+          opacity: 0.6;
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 0.9; }
+        }
+
+        .shooting-star {
+          position: fixed;
+          width: 3px;
+          height: 3px;
+          background: white;
+          border-radius: 50%;
+          box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+          animation: shoot linear;
+          opacity: 0;
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        .shooting-star::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 3px;
+          width: 100px;
+          height: 2px;
+          background: linear-gradient(to right, rgba(255, 255, 255, 0.8), transparent);
+          transform: translateY(1px);
+        }
+
+        @keyframes shoot {
+          0% {
+            opacity: 1;
+            transform: translateX(0) translateY(0) rotate(-45deg);
+          }
+          100% {
+            opacity: 0;
+            transform: translateX(300px) translateY(300px) rotate(-45deg);
+          }
+        }
+
+        .snowflake {
+          position: fixed;
+          top: -10vh;
+          color: white;
+          font-size: 2vmin;
+          opacity: 0.8;
+          pointer-events: none;
+          animation: snowfall linear infinite;
+          text-shadow: 0 0 1vmin rgba(255,255,255,0.8);
+          z-index: 1;
+        }
+
+        @keyframes snowfall {
+          0% {
+            top: -10vh;
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.8;
+          }
+          90% {
+            opacity: 0.8;
+          }
+          100% {
+            top: 110vh;
+            opacity: 0;
+          }
+        }
+
+        /* Content Container */
+        .content {
+          position: relative;
+          z-index: 10;
+          padding: 20px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+          text-align: center;
+          padding: 40px 20px;
+          background: rgba(54, 54, 54, 0.5);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          margin-bottom: 40px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-logo {
+          width: 120px;
+          height: 120px;
+          margin: 0 auto 20px;
+          border-radius: 50%;
+          box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+          border: 3px solid #ffd700;
+        }
+
+        .header h1 {
+          font-size: 48px;
+          color: #ffd700;
+          margin: 0;
+          text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+          font-weight: bold;
+          letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+          font-size: 28px;
+          color: #fff;
+          margin-top: 15px;
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .event-details {
+          display: flex;
+          justify-content: center;
+          gap: 40px;
+          margin-top: 25px;
+          flex-wrap: wrap;
+        }
+
+        .detail-box {
+          background: rgba(255, 215, 0, 0.2);
+          padding: 15px 30px;
+          border-radius: 15px;
+          border: 2px solid #ffd700;
+        }
+
+        .detail-box .label {
+          font-size: 14px;
+          color: #ffd700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        .detail-box .value {
+          font-size: 24px;
+          color: #fff;
+          font-weight: bold;
+          margin-top: 5px;
+        }
+
+        /* Ticket Section */
+        .ticket-section {
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          padding: 30px;
+          margin-bottom: 40px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .ticket-section h2 {
+          color: #ffd700;
+          font-size: 32px;
+          margin-bottom: 30px;
+          text-align: center;
+          text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .tickets-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 30px;
+          margin-top: 30px;
+        }
+
+        .ticket-card {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 15px;
+          padding: 20px;
+          border: 2px solid rgba(255, 215, 0, 0.3);
+          transition: all 0.3s ease;
+        }
+
+        .ticket-card:hover {
+          transform: translateY(-5px);
+          border-color: #ffd700;
+          box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .ticket-image {
+          width: 100%;
+          height: auto;
+          border-radius: 10px;
+          margin-bottom: 15px;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .ticket-type {
+          text-align: center;
+          font-size: 24px;
+          color: #fff;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+
+        .price-tag {
+          text-align: center;
+          font-size: 36px;
+          color: #ff4444;
+          font-weight: bold;
+          margin: 15px 0;
+          text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+        }
+
+        /* Locations Grid */
+        .locations-section {
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          padding: 40px 30px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .locations-section h2 {
+          color: #ffd700;
+          font-size: 36px;
+          text-align: center;
+          margin-bottom: 40px;
+          text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .locations-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 25px;
+        }
+
+        .location-card {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 15px;
+          padding: 0;
+          border: 2px solid rgba(255, 215, 0, 0.3);
+          transition: all 0.3s ease;
+          backdrop-filter: blur(5px);
+          overflow: hidden;
+        }
+
+        .location-card:hover {
+          transform: translateY(-5px);
+          border-color: #ffd700;
+          box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .location-image {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          display: block;
+        }
+
+        .location-info {
+          padding: 20px;
+        }
+
+        .location-card .location-name {
+          color: #fff;
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 8px;
+          text-align: center;
+        }
+
+        .location-card .location-area {
+          color: #ffd700;
+          font-size: 16px;
+          text-align: center;
+          margin-bottom: 15px;
+        }
+
+        .map-link {
+          display: block;
+          background: linear-gradient(135deg, #ff4444, #cc0000);
+          color: #fff;
+          text-decoration: none;
+          padding: 12px;
+          border-radius: 10px;
+          text-align: center;
+          font-weight: bold;
+          transition: all 0.3s ease;
+        }
+
+        .map-link:hover {
+          background: linear-gradient(135deg, #ff6666, #ff4444);
+          transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+          text-align: center;
+          padding: 30px;
+          margin-top: 40px;
+          background: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer p {
+          color: #fff;
+          font-size: 18px;
+          margin: 10px 0;
+        }
+
+        .footer .contact {
+          color: #ffd700;
+          font-weight: bold;
+          font-size: 20px;
+        }
+
+        .sponsors-section {
+          margin: 30px 0;
+          padding: 20px 0;
+        }
+
+        .sponsors-section h3 {
+          color: #ffd700;
+          font-size: 24px;
+          margin-bottom: 25px;
+          text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .sponsors-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 25px;
+          max-width: 900px;
+          margin: 0 auto;
+          align-items: center;
+        }
+
+        .sponsor-logo {
+          width: 100%;
+          max-width: 150px;
+          height: 100px;
+          object-fit: contain;
+          margin: 0 auto;
+          display: block;
+          background: rgba(255, 255, 255, 0.1);
+          padding: 15px;
+          border-radius: 15px;
+          border: 2px solid rgba(255, 215, 0, 0.3);
+          transition: all 0.3s ease;
+        }
+
+        .sponsor-logo:hover {
+          transform: scale(1.1);
+          border-color: #ffd700;
+          box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .not-loaded * {
+          animation-play-state: paused !important;
+        }
+
+        @media (max-width: 768px) {
+          .header h1 {
+            font-size: 32px;
+          }
+
+          .header .subtitle {
+            font-size: 20px;
+          }
+
+          .header-logo {
+            width: 80px;
+            height: 80px;
+          }
+
+          .detail-box .value {
+            font-size: 20px;
+          }
+
+          .price-tag {
+            font-size: 36px;
+          }
+
+          .locations-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .sponsors-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+          }
+
+          .sponsor-logo {
+            max-width: 120px;
+            height: 80px;
+          }
+        }
+    </style>
+</head>
+<body class="not-loaded">
+    <div class="night"></div>
+
+    <div class="content">
+        <!-- Header -->
+        <div class="header">
+            <img src="FiestaCo.png" alt="Event Logo" class="header-logo">
+            <h1>🎄 Christmas Party 🎄</h1>
+            <p class="subtitle">Unleash The Party</p>
+            <div class="event-details">
+                <div class="detail-box">
+                    <div class="label">Date</div>
+                    <div class="value">25 DEC</div>
+                </div>
+                <div class="detail-box">
+                    <div class="label">Time</div>
+                    <div class="value">7:30 PM</div>
+                </div>
+                <div class="detail-box">
+                    <div class="label">Venue</div>
+                    <div class="value">The Dream Venue, Paroda</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticket Section -->
+        <div class="ticket-section">
+            <h2>🎫 Get Your Passes Now!</h2>
+            <p style="text-align: center; color: #fff; font-size: 18px; margin-bottom: 30px;">
+                Enjoy fun games, exciting spot prizes, and delicious drinks & food stalls!
+            </p>
+            
+            <div class="tickets-container">
+                <div class="ticket-card">
+                    <img src="Stag Ticket.png" alt="Stag Entry Ticket" class="ticket-image">
+                    <div class="ticket-type">Stag Entry</div>
+                    <div class="price-tag">₹1000</div>
+                </div>
+
+                <div class="ticket-card">
+                    <img src="Ladies Ticket.png" alt="Ladies Entry Ticket" class="ticket-image">
+                    <div class="ticket-type">Ladies Entry</div>
+                    <div class="price-tag">₹500</div>
+                </div>
+
+                <div class="ticket-card">
+                    <img src="Couple Ticket.png" alt="Couple Entry Ticket" class="ticket-image">
+                    <div class="ticket-type">Couple Entry</div>
+                    <div class="price-tag">₹800</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Locations -->
+        <div class="locations-section">
+            <h2>📍 Passes Available At:</h2>
+            <div class="locations-grid">
+                <div class="location-card">
+                    <img src="starlight.jpg" alt="Starlight" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Starlight</div>
+                        <div class="location-area">Assolna</div>
+                        <a href="https://maps.app.goo.gl/txVhHuCjDER4LfKu5?g_st=aw" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <img src="baskin-robbins.jpg" alt="Baskin Robbins" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Baskin Robbins</div>
+                        <div class="location-area">Benaulim</div>
+                        <a href="https://share.google/yrFrHGY74jiydPQbi" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <img src="good-times.jpg" alt="Good Times Wine Store" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Good Times Wine Store</div>
+                        <div class="location-area">Quepem</div>
+                        <a href="https://share.google/Rul6LdY6S3vKPRxis" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <img src="carevela.jpg" alt="Caravela Cafe & Bistro" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Caravela Cafe & Bistro</div>
+                        <div class="location-area">Varca</div>
+                        <a href="https://share.google/71m9UNv9hUanvOAKI" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                 <div class="location-card">
+                    <img src="carevelaa.webp" alt="Caravela Cafe & Bistro" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Caravela Cafe & Bistro</div>
+                        <div class="location-area">Margao</div>
+                        <a href="https://share.google/Sn4SHfJrCorWQhGjL" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <img src="splashdown.webp" alt="Splashdown Waterpark" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Splashdown Waterpark</div>
+                        <div class="location-area">Anjuna</div>
+                        <a href="https://share.google/01pD1oCMPYQ8nvu61" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <img src="ramola.jpg" alt="Ramola Cafe" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Ramola Cafe</div>
+                        <div class="location-area">Margao</div>
+                        <a href="https://share.google/W11gWz1uZm9CrQMSC" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <img src="kentuckee.webp" alt="Kentuckee" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Kentuckee</div>
+                        <div class="location-area">Colva</div>
+                        <a href="https://share.google/xN9LX8HAwljEVOdOt" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <img src="toso.webp" alt="Toso Beach Shack" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Toso Beach Shack</div>
+                        <div class="location-area">Benaulim</div>
+                        <a href="https://share.google/aScJggdQe7fohi9MN" class="map-link">View on Map</a>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <img src="pedros.webp" alt="Pedro's Bar & Restaurant" class="location-image">
+                    <div class="location-info">
+                        <div class="location-name">Pedro's Bar & Restaurant</div>
+                        <div class="location-area">Benaulim</div>
+                        <a href="https://share.google/KYGqLZI33XCoLPNZU" class="map-link">View on Map</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="sponsors-section">
+                <h3>🎉 Supported By 🎉</h3>
+                <div class="sponsors-grid">
+                    <img src="dream.png" alt="Sponsor 1" class="sponsor-logo">
+                    <img src="jolly.jpeg" alt="Sponsor 2" class="sponsor-logo">
+                    <img src="stann.png" alt="Sponsor 3" class="sponsor-logo">
+                    <img src="Geoff logo.PNG" alt="Sponsor 4" class="sponsor-logo">
+                    <img src="Goa FYI .png" alt="Sponsor 5" class="sponsor-logo">
+                    <img src="max.jpeg" alt="Sponsor 6" class="sponsor-logo">
+                </div>
+            </div>
+            
+            <p style="margin-top: 30px;">Dress Code: Smart Casual</p>
+            <p class="contact" style="margin-top: 20px;">📞 For booking contact:</p>
+            <p class="contact">8805759634 / 9518332530 / 8087371470</p>
+        </div>
+    </div>
+
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.fontSize = (Math.random() * 2 + 1) + 'vmin';
+            snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 12000);
+        }
+
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.classList.add('shooting-star');
+            star.style.left = Math.random() * 50 + 'vw';
+            star.style.top = Math.random() * 30 + 'vh';
+            star.style.animationDuration = (Math.random() * 0.5 + 0.8) + 's';
+            document.body.appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, 2000);
+        }
+
+        onload = () => {
+            const c = setTimeout(() => {
+                document.body.classList.remove("not-loaded");
+                clearTimeout(c);
+            }, 1000);
+
+            // Create initial snowflakes
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => createSnowflake(), i * 100);
+            }
+
+            // Continue creating snowflakes
+            setInterval(createSnowflake, 200);
+
+            // Create shooting stars occasionally
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createShootingStar();
+                }
+            }, 2000);
+        };
+    </script>
+</body>
+</html>
